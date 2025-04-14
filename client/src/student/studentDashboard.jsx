@@ -4,6 +4,7 @@ import Navbar from "../pages/Navbar";
 
 const StudentDashboard = () => {
   const student_id = localStorage.getItem("id");
+
   return (
     <div>
       <Navbar />
@@ -44,6 +45,14 @@ const StudentDashboard = () => {
                 className="block text-lg font-semibold text-gray-700 bg-blue-100 hover:bg-blue-200 py-3 px-4 rounded-lg transition duration-300 flex items-center gap-3"
               >
                 💰 Fine
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/booking"
+                className="block text-lg font-semibold text-gray-700 bg-blue-100 hover:bg-blue-200 py-3 px-4 rounded-lg transition duration-300 flex items-center gap-3"
+              >
+                🏠 Booking
               </Link>
             </li>
           </ul>

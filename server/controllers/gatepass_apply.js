@@ -30,16 +30,16 @@ export async function gate_pass_apply(req, res) {
 export async function getallgatepass(req, res) {
   const student_id = req.user.id;
   console.log(student_id);
-  
+
   try {
     const gatepasses = await pool.query(
       "SELECT * FROM gate_pass WHERE student_id = $1",
       [student_id]
     );
     // console.log(gatepasses.rows);
-    
-    if(gatepasses.rows.length === 0){
-      return res.status(200).json({message : "No gatepass till now"})
+
+    if (gatepasses.rows.length === 0) {
+      return res.status(200).json({ message: "No gatepass till now" });
     }
     return res.status(200).json({ gatepasses: gatepasses.rows });
   } catch (err) {

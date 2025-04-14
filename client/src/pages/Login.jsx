@@ -16,21 +16,27 @@ function Login() {
     try {
       const response = await axios.post(
         "http://localhost:5000/api/user/login",
-        {
-          email,
-          password,
-        }
+        { email, password }
       );
+      // console.log(response.data.otpRequired);
+      alert(response.data.otpRequired);
 
-      alert(response.data.message);
-      localStorage.setItem("loggedIn", response.data.role);
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("id", response.data.id);
+      
 
-      if (response.data.role === "admin") {
-        navigate("/admin-dashboard");
+      if (response.data.otpRequired) {
+        localStorage.setItem("email", email); // Store email for OTP verification
+        navigate("/verify-otp");
       } else {
-        navigate("/student-dashboard");
+        // If no OTP is required, log in the user directly
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("loggedIn", response.data.role);
+        localStorage.setItem("id", response.data.id);
+
+        if (response.data.role === "admin") {
+          navigate("/admin-dashboard");
+        } else {
+          navigate("/student-dashboard");
+        }
       }
     } catch (error) {
       alert(error.response?.data?.message || "Login failed");
@@ -48,18 +54,18 @@ function Login() {
           <input
             type="email"
             placeholder="Email"
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+            className="w-full p-3 border border-gray-300 rounded-md"
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
             placeholder="Password"
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+            className="w-full p-3 border border-gray-300 rounded-md"
             onChange={(e) => setPassword(e.target.value)}
           />
 
           <button
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300"
+            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md"
             onClick={handleLogin}
           >
             Login

@@ -15,7 +15,10 @@ import ProtectedRoute from "./ProtectedRoute.jsx";
 import Admindashboard from "./Admin/Admindashboard.jsx";
 import FineManagement from "./Admin/FineManagement.jsx";
 import StudentFinePage from "./student/Fine.jsx";
-
+import VerifyToken from "./pages/VerifyToken.jsx";
+import BookingPage from "./student/Booking.jsx";
+import PaymentSuccessPage from "./student/PageSuccess.jsx";
+import Termsandcondition from "./student/Termsandcondition.jsx";
 function App() {
   return (
     <Router>
@@ -23,6 +26,7 @@ function App() {
         <Route path="/" element={<RoleSelection />} />
         <Route path="/signup/:role" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/verify-otp" element={<VerifyToken />} />
 
         {/* Student Protected Routes */}
         <Route
@@ -83,6 +87,23 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/booking"
+          element={
+            <ProtectedRoute allowedRoles={["student"]}>
+              <BookingPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/successpage"
+          element={
+            <ProtectedRoute allowedRoles={["student"]}>
+              <PaymentSuccessPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/terms" element={<Termsandcondition />} />
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
